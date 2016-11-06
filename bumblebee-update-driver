@@ -1,0 +1,27 @@
+#!/bin/sh
+#
+# Copyright (c) 2015-2016
+# Author: Victor Arribas <v.arribas.urjc@gmail.com>
+# License: GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
+
+set -e
+set -u
+
+# Only *last* nvidia driver is installed (ii), rest are *deprecated/removed* (rc)
+nvidia_driver=$(dpkg -l | grep 'ii' | awk '{print $2}' | grep '^nvidia-...$')
+
+# manual selection (rare cases)
+if [ "${1-}" != "" ]; then
+  if dpkg -l $1 | grep -q '^ii'; then
+    nvidia_driver=$1
+  else
+    echo "Error: wrong version '$1'. Ensure it is installed and actived."
+    exit 1
+  fi
+fi
+
+test -n "$nvidia_driver"
+echo "Injecting nvidia driver: $nvidia_driver ..."
+
+sed -i "s/nvidia-.../$nvidia_driver/g" /etc/bumblebee/bumblebee.conf
+sed -i "s/nvidia-current/$nvidia_driver/g" /etc/bumblebee/bumblebee.conf
