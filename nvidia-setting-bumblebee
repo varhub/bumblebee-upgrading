@@ -4,4 +4,4 @@
 # Author: Victor Arribas <v.arribas.urjc@gmail.com>
 # License: GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
 
-optirun -b none nvidia-settings-old -c :8
+optirun -b none nvidia-settings -c :8

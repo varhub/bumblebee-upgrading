@@ -1,0 +1,7 @@
+## Install
+apt-add-repository ppa:xorg-edgers/ppa
+apt-add-repository ppa:graphics-drivers/ppa
+
+## To remove
+apt-get install ppa-purge
+ppa-purge xorg-edgers
